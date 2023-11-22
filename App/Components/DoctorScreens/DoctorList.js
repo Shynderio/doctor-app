@@ -7,38 +7,52 @@ import GlobalApi from '../../Services/GlobalApi';
 import { useNavigation } from '@react-navigation/native';
 
 
-export default function DoctorList({category}) {
+export default function DoctorList({ category , all = false}) {
 
-    const [doctorList, setDoctorList]=useState([]);
+    const [doctorList, setDoctorList] = useState([]);
 
-    useEffect(()=>{
-        getHighRated();
-    },[])
+    useEffect(() => {
+        all
+        ?getHighRated()
+        :getDoctorsBySpecialization()
+    }, [])
 
     const getHighRated=()=>{
         GlobalApi.getHighRated().then(resp=>{
             setDoctorList(resp)
-            console.log(resp)
         })
     }
-    const navigation=useNavigation();
-  return (
-    <View style={{marginBottom:140, marginTop:20}}>
-        {
-            !doctorList?.length
-            ?<ActivityIndicator size={'large'} color={Colors.PRIMARY}/>
-            :<FlatList
-            showsVerticalScrollIndicator={false}
-            data={doctorList}
-            renderItem={({item})=>(
-              <TouchableOpacity 
-              onPress={()=>navigation.navigate('doctor-detail', {doctor:item})}>
-                  <DoctorCardItem doctor={item}/>
-              </TouchableOpacity>
-            )}
-            />
+    const getDoctorsBySpecialization = () => {
+        GlobalApi.getDoctorsBySpecialization(category)
+            .then((resp) => {
 
-        }
-    </View>
-  )
+                setDoctorList(resp);
+                console.log(resp);
+            })
+            .catch((error) => {
+                console.error('Error fetching doctors:', error.message);
+            });
+    };
+
+
+    const navigation = useNavigation();
+    return (
+        <View style={{ marginBottom: 140, marginTop: 20 }}>
+            {
+                !doctorList?.length
+                    ? <ActivityIndicator size={'large'} color={Colors.PRIMARY} />
+                    : <FlatList
+                        showsVerticalScrollIndicator={false}
+                        data={doctorList}
+                        renderItem={({ item }) => (
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate('doctor-detail', { doctor: item })}>
+                                <DoctorCardItem doctor={item} />
+                            </TouchableOpacity>
+                        )}
+                    />
+
+            }
+        </View>
+    )
 }

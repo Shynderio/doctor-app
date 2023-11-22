@@ -1,46 +1,44 @@
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
-import React from 'react'
-import app from './../../assets/images/app.png'
-import Colors from '../../assets/Shared/Colors'
+import React from 'react';
+import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+import appImage from './../../assets/images/app.png';
+import Colors from '../../assets/Shared/Colors';
 import SignInWithOAuth from '../Components/SignInWithOAuth';
 
 export default function Login() {
   return (
-    
-    <View>
-      {/* <Text>Login</Text> */}
-      <Image souce={app} style={styles.appImage}/>
-      <View style={{backgroundColor:Colors.white,
-        padding:25,
-        alignItems:'center',
-    }}> 
-        <Text style={styles.heading}>Doctor appointment</Text>
-        <Text style={styles.heading}>booking App</Text>
-        <SignInWithOAuth/>
+    <View style={styles.container}>
+      <Image source={appImage} style={styles.appImage} />
+      <View style={styles.content}>
+        <Text style={styles.heading}>Doctor Appointment</Text>
+        <Text style={styles.heading}>Booking App</Text>
+        <SignInWithOAuth />
       </View>
     </View>
-  )
+  );
 }
+
 const styles = StyleSheet.create({
-    appImage:{
-        width:300,
-        height:500,
-        objectFit:'contain'
-    },
-    heading:{
-        fontSize:28,
-        fontWeight:'bold'
-    },
-    buttonText:{
-        fontSize:17,
-        color:Colors.white
-    },
-    loginButton:{
-        padding:16,
-        backgroundColor:Colors.PRIMARY,
-        borderRadius:90,
-        alignItems:'center',
-        marginTop:20,
-        width:Dimensions.get('window').width*0.8,
-    }
-})
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.white,
+  },
+  appImage: {
+    width: 300,
+    height: 300,
+    resizeMode: 'contain',
+  },
+  content: {
+    backgroundColor: Colors.white,
+    padding: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  heading: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+});
+

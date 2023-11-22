@@ -3,16 +3,23 @@ import React, {useState, useEffect} from 'react'
 import Colors from '../../../assets/Shared/Colors'
 import SubHeading from '../Home/SubHeading'
 import moment from 'moment'
+import { useUser } from '@clerk/clerk-expo'
+import { useNavigation } from '@react-navigation/native'
+import GlobalApi from '../../Services/GlobalApi'
 
-export default function BookingSection() {
+export default function BookingSection({doctor}) {
+
+    const {isLoaded, isSignIn, user} = useUser();
+
     useEffect(()=>{
         getDays();
         getTime();
+        // bookAppointment()
     }, [])
     const [selectedDate, setSelectedDate]= useState([]);
     const [selectedTime, setSelectedTime]= useState([]);
     const [timeList, setTimeList]= useState([]);
-
+    const navigation=useNavigation();
     const [next7Days, setNext7Days] = useState([]);
     const getDays=()=>{ 
         const today=moment()
@@ -51,6 +58,31 @@ export default function BookingSection() {
         }
         setTimeList(timeList)
 
+    }
+
+    const bookAppointment=()=>{
+        console.log("date: ", selectedDate)
+        console.log("time:", selectedTime)
+        if (selectedDate != '' && selectedTime != '') {
+            const combinedDateTime = moment(selectedDate).format('YYYY-MM-DD') + 'T' + moment(selectedTime, 'hh:mm A').format('HH:mm:ss');
+            // Now combinedDateTime holds the selected date and time in the format YYYY-MM-DDTHH:MM:SS
+            
+            // You can use combinedDateTime in your data object or perform further operations with it
+            const data = {
+                userId: "655a9faafa490f31780471cf",
+                doctorId: doctor.doctorId,
+                dateTime: combinedDateTime,
+                // Other properties...
+            };
+            GlobalApi.bookAppointment(data)
+            // console.log('user', user)
+            // Perform actions with the combined date and time
+            console.log('Combined Date and Time:', combinedDateTime);
+            console.log('Appointment Data:', data);
+        } else {
+            // Handle the case where either the date or time is not selected
+            console.error('Please select both date and time');
+        }
     }
     
   return (
@@ -135,9 +167,11 @@ export default function BookingSection() {
       placeholder='Write Your Notes Here'
       />
       <TouchableOpacity
-                onPress={()=>navigation.navigate('book-appointment',{
-                    doctor:doctor
-                })}
+                onPress={()=>
+                    // navigation.navigate('book-appointment',{
+                    // doctor:doctor})
+                    bookAppointment()
+                }
                 style={{
                     padding: 13,
                     backgroundColor: Colors.PRIMARY,

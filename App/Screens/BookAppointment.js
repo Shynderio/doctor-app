@@ -14,7 +14,7 @@ export default function BookAppointment() {
       <AppointmentDoctorInfo doctor={param.doctor}/>
       <ActionButton/>
       <HorizontalLine/>
-      <BookingSection/>
+      <BookingSection doctor={param.doctor}/>
     </ScrollView>
   )
 }

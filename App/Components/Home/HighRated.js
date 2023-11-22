@@ -9,10 +9,12 @@ export default function HighRated() {
     const [doctalList, setDoctorList]=useState([]);
     useEffect(()=>{
         getHighRated()
-    })
+        
+    },[])
     const getHighRated=()=>{
         GlobalApi.getHighRated().then(resp=>{
-            setDoctorList(resp)
+            const highRatedDoctors = resp.filter(doctor => doctor.attributes.Rating > 4);
+            setDoctorList(highRatedDoctors)
         })
     }
   return (

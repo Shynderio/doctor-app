@@ -36,7 +36,7 @@ export default function DoctorListScreen() {
       {
           activeTab=='Description'
           ?<Speciality/>
-          :<DoctorList doctorList={categoryName}/>
+          :<DoctorList category={categoryName}/>
       }
     
     </View>

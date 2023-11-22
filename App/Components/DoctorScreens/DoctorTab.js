@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Colors from '../../../assets/Shared/Colors'
 
 
-export default function DoctorTab({activeTab}) {
+export default function DoctorTab({activeTab, isExplore}) {
     const [activeIndex, setActiveIndex] = useState(0)
     return (
         <View style={{ marginTop: 10 }}>
@@ -11,11 +11,12 @@ export default function DoctorTab({activeTab}) {
                 display: 'flex', flexDirection: 'row',
                 alignItems: 'center', justifyContent: 'space-around'
             }}>
+
                 <TouchableOpacity 
                     style={[
                         activeIndex==0
                         ?styles.activeTab
-                        :styles.activeText
+                        :styles.inActiveTab
                     ]}
                 onPress={()=>{setActiveIndex(0), activeTab('Description')}}>
                     <Text style={[
@@ -30,7 +31,7 @@ export default function DoctorTab({activeTab}) {
                     style={[
                         activeIndex==1
                         ?styles.activeTab
-                        :styles.activeText
+                        :styles.inActiveTab
                     ]}
                 onPress={()=>{setActiveIndex(1), activeTab('Doctor')}}>
                     <Text style={[

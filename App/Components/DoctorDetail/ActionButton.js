@@ -34,13 +34,40 @@ export default function ActionButton() {
   return (
     
     <View style={{marginTop:15}}>
-      <FlatList
+        <FlatList
+    data={actionButtonList}
+    horizontal={true}
+    renderItem={({ item }) => (
+        <TouchableOpacity style={{ paddingHorizontal: 4 }}>
+            <View style={{
+                backgroundColor: Colors.SECONDARY,
+                padding: 13,
+                borderRadius: 99,
+                alignItems: 'center',
+                width: 55,
+                justifyContent: 'center',
+                marginRight: 8, // Adjust spacing between items
+            }}>
+                <Ionicons name={item.icon} size={25} color={Colors.PRIMARY} />
+            </View>
+            <Text style={{
+                fontFamily: 'appfont-semi',
+                marginTop: 5,
+                textAlign: 'center', // Center text
+                width: 55, // Set width to match item width
+            }}>{item.name}</Text>
+        </TouchableOpacity>
+    )}
+/>
+
+      {/* <FlatList
         data={actionButtonList}
-        columnWrapperStyle={{
-            flex:1,
-            justifyContent:'space-between'
-        }}
-        numColumns={5}
+        // columnWrapperStyle={{
+        //     flex:1,
+        //     justifyContent:'space-between'
+        // }}
+        // numColumns={5}
+        horizontal={true}
         renderItem={({item})=>(
             <TouchableOpacity style={{alignItems:'center'}}>
                 <View style={{backgroundColor:Colors.SECONDARY, 
@@ -58,7 +85,7 @@ export default function ActionButton() {
             </TouchableOpacity>
         )
         }
-      />
+      /> */}
     </View>
   )
 }

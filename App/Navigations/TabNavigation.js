@@ -7,6 +7,7 @@ import Home from '../Screens/Home'
 import {Ionicons} from '@expo/vector-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeNavigation from './HomeNavigation';
+import Explore from '../Screens/Explore';
 
 
 const Tab = createBottomTabNavigator()
@@ -21,6 +22,12 @@ export default function TabNavigation() {
             options={{
                 tabBarIcon:({color,size})=>(
                     <Ionicons name="home" size={size} color={color}/>
+                )
+            }}
+        />
+        <Tab.Screen name='Explore' component={Explore} options={{
+                tabBarIcon:({color,size})=>(
+                    <Ionicons name="search" size={size} color={color}/>
                 )
             }}
         />

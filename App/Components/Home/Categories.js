@@ -8,10 +8,21 @@ import { useNavigation } from '@react-navigation/native'
 export default function Categories() {
     const navigation = useNavigation()
     const [categoriesList, setCategoriesList] = useState([]);
-
+    const [specs, setSpec] = useState([])
+    // const allspec = GlobalApi.getAllSpecs()
+    
     useEffect(() => {
-        getSpecializations();
+        getSpecializations()
+        // const allspec = GlobalApi.getAllSpecs()
+        getSpecs()
     }, [])
+
+    const getSpecs = () =>{
+        GlobalApi.getSpecializations().then(resp =>{
+            setSpec(resp)
+            console.log("specs:", resp)
+        })
+    }
 
     const getSpecializations = () => {
         GlobalApi.getSpecializations().then(resp => {
@@ -36,7 +47,7 @@ export default function Categories() {
                 <TouchableOpacity 
                 onPress={()=>navigation.navigate('doctor-list-screen',
                 {
-                    categoryName:item.attributes.Name
+                    categoryName:item.description
                 })}
                 style={{alignItems:'center'}}>
                     <View style={{
@@ -46,14 +57,14 @@ export default function Categories() {
                     }}>
                         <Image
                             source={{
-                                uri:item.attributes.Icon.data.attributes.url
+                                uri: (item.icon + "").replace(GlobalApi.DATA_Port, GlobalApi.BASE_URL)
                             }}
                             style={{
                                 width:30, height:30
                             }}
                         />
                     </View>
-                    <Text>{item.attributes.Name}</Text>
+                    <Text>{item.description}</Text>
                 </TouchableOpacity>
             )}
             />
